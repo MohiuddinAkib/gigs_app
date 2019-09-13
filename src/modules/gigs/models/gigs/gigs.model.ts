@@ -1,17 +1,19 @@
-import { Model } from 'sequelize/types';
 import * as Sequelize from 'sequelize';
-import { Gig } from '@interfaces/gigs/gig.interface';
-import { Column } from 'sequelize-typescript';
+import { Column, Table, Model } from 'sequelize-typescript';
+import { Gigs as GigsInterface } from '@interfaces/gigs/gig.interface';
+import { ApiModelProperty } from '@nestjs/swagger';
 
-export class Gigs extends Model<Gig> {
+@Table
+export class Gigs extends Model<GigsInterface> {
   @Column({
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
   })
-  id: string;
+  id: number;
 
+  @ApiModelProperty()
   @Column({
     allowNull: false,
     type: Sequelize.STRING,
@@ -27,6 +29,7 @@ export class Gigs extends Model<Gig> {
   })
   title: string;
 
+  @ApiModelProperty()
   @Column({
     allowNull: false,
     type: Sequelize.STRING,
@@ -42,6 +45,7 @@ export class Gigs extends Model<Gig> {
   })
   technologies: string;
 
+  @ApiModelProperty()
   @Column({
     allowNull: false,
     type: Sequelize.STRING,
@@ -57,6 +61,7 @@ export class Gigs extends Model<Gig> {
   })
   budget: string;
 
+  @ApiModelProperty()
   @Column({
     allowNull: false,
     type: Sequelize.STRING,
@@ -72,6 +77,7 @@ export class Gigs extends Model<Gig> {
   })
   description: string;
 
+  @ApiModelProperty()
   @Column({
     allowNull: false,
     type: Sequelize.STRING,
@@ -90,7 +96,7 @@ export class Gigs extends Model<Gig> {
   @Column({
     allowNull: false,
     type: Sequelize.DATE,
-    defaultValue: Date.now(),
+    defaultValue: Sequelize.NOW,
     validate: {
       isDate: true,
     },

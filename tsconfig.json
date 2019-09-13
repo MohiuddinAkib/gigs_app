@@ -14,7 +14,8 @@
       "@src/*": ["src/*"],
       "@modules/*": ["src/modules/*"],
       "@interfaces/*": ["src/interfaces/*"],
-      "@providers/*": ["src/providers/*"]
+      "@providers/*": ["src/providers/*"],
+      "@middlewares/*": ["src/middlewares/*"]
     }
   },
   "exclude": ["node_modules", "dist"]
