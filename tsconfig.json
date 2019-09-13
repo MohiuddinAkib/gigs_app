@@ -11,8 +11,10 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@modules/*": ["src/modules/*"]
+      "@src/*": ["src/*"],
+      "@modules/*": ["src/modules/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@providers/*": ["src/providers/*"]
     }
   },
   "exclude": ["node_modules", "dist"]
