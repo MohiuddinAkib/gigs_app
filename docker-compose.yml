@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nest_server:
-    container_name: nest-server
+    container_name: nest_server
     build:
       context: .
       dockerfile: Dockerfile
@@ -30,10 +30,10 @@ services:
     volumes:
       - .:/usr/app
       - ./node_modules:/usr/app/node_modules
-    ports:
-      - ${PORT}:${PORT}
-    expose:
-      - ${PORT}
+    # ports:
+    #   - ${PORT}:${PORT}
+    # expose:
+    #   - ${PORT}
     networks:
       - gigs_network
     depends_on:
@@ -50,6 +50,38 @@ services:
       POSTGRES_DB: ${DB_NAME}
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - gigs_network
+
+  pgadmin:
+    container_name: 'gigs_pgadmin'
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - './pgadmin:/var/lib/pgadmin'
+    ports:
+      - 3001:80
+    depends_on:
+      - db
+    networks:
+      - gigs_network
+
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - '3000:80'
+    volumes:
+      - ./web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./certbot-etc:/etc/letsencrypt
+      - ./certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - nest_server
     networks:
       - gigs_network
 

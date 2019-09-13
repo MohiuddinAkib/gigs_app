@@ -2,11 +2,31 @@ node_modules/
 dist/
 .env
 .env.dev
-Dockerfile*
-docker-compose*
-.dockerignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Git
 .git
 .gitignore
 README.md
 LICENSE
+
+# IDE
 .vscode
+.idea
+
+# Postgres volumes
+pgdata/
+
+# Pgadmin volumes
+pgadmin/
+
+# Nginx volumes
+web-root/
+nginx-conf/
+
+# Certbot volumes
+certbot-etc/
+certbot-var/

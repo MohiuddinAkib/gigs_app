@@ -29,7 +29,7 @@ RUN yarn install
 COPY . .
 
 # Exposing port
-EXPOSE ${PORT}
+# EXPOSE ${PORT}
 
 # Command
 CMD [ "yarn", "start:dev" ]
