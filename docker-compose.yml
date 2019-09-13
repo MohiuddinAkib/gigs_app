@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  nest_server:
+    container_name: nest-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PORT=${PORT}
+        - NODE_ENV=${NODE_ENV}
+        - DB_DIALECT=${DB_DIALECT}
+        - DB_HOST=${DB_HOST}
+        - DB_PORT=${DB_PORT}
+        - DB_USER=${DB_USER}
+        - DB_PASS=${DB_PASS}
+        - DB_NAME=${DB_NAME}
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
+      - DB_DIALECT=${DB_DIALECT}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+    volumes:
+      - .:/usr/app
+      - ./node_modules:/usr/app/node_modules
+    ports:
+      - ${PORT}:${PORT}
+    expose:
+      - ${PORT}
+    networks:
+      - gigs_network
+    depends_on:
+      - db
+    command: yarn start:dev
+
+  db:
+    container_name: 'gigs_database'
+    image: postgres:11.5-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - gigs_network
+
+networks:
+  gigs_network:
+    driver: bridge
